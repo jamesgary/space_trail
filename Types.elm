@@ -1,5 +1,6 @@
 module Types exposing (..)
 
+import Color exposing (Color)
 import Navigation
 
 
@@ -20,7 +21,19 @@ type alias TurnData =
     , fuel : Int
     , pop : Int
     , robot : Int
+    , planets : List Planet
     }
+
+
+type alias Planet =
+    { color : Color
+    , pos : Pos
+    , rad : Int
+    }
+
+
+type alias Pos =
+    { x : Int, y : Int }
 
 
 type Msg
@@ -36,4 +49,10 @@ initTurnData =
     , fuel = 999
     , pop = 27
     , robot = 101
+    , planets =
+        [ { color = Color.lightRed
+          , pos = Pos 300 300
+          , rad = 30
+          }
+        ]
     }
