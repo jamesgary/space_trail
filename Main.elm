@@ -1,13 +1,14 @@
 module Main exposing (main)
 
 import Html
+import Navigation
 import Time
 import Types exposing (..)
 import View exposing (view)
 
 
 main =
-    Html.program
+    Navigation.program UrlChange
         { init = init
         , view = view
         , update = update
@@ -15,17 +16,23 @@ main =
         }
 
 
-init : ( Model, Cmd Msg )
-init =
-    ( { state = Start }
-    , Cmd.none
-    )
+init : Navigation.Location -> ( Model, Cmd Msg )
+init location =
+    case location.hash of
+        "#turn" ->
+            ( { state = Turn initTurnData }, Cmd.none )
+
+        _ ->
+            ( { state = Start }, Cmd.none )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Noop ->
+        ClickStart ->
+            ( { state = Turn initTurnData }, Cmd.none )
+
+        UrlChange url ->
             ( model, Cmd.none )
 
 

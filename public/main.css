@@ -4,27 +4,7 @@ html, body {
   user-select: none;
   width: 100%;
   height: 100%;
-  font-family: sans-serif;
-}
-
-.start {
-  height: 100%;
-  width: 100%;
-  background-image: linear-gradient(to top, #330867 0%, #30cfd0 100%);
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  justify-content: space-evenly;
-}
-
-.start h1 {
-  color: white;
-  margin: 0;
-}
-
-.start .btn {
-  margin: 0 auto;
-  width: 160px;
+  font-family: 'Michroma', sans-serif;
 }
 
 .btn {
@@ -41,3 +21,92 @@ html, body {
   background: #2ab;
   border: 2px solid #099;
 }
+
+.screen {
+  height: 100%;
+  width: 100%;
+  display: flex;
+}
+
+/* START SCREEN */
+
+.screen.screen-start {
+  background-image: linear-gradient(to top, #330867 0%, #30cfd0 100%);
+  flex-direction: column;
+  text-align: center;
+  justify-content: space-evenly;
+}
+
+.screen.screen-start h1 {
+  color: white;
+  margin: 0;
+}
+
+.screen.screen-start .btn {
+  margin: 0 auto;
+  width: 160px;
+}
+
+/* TURN SCREEN */
+
+.screen.screen-turn {
+  display: grid;
+  background: #122;
+  text-align: center;
+  grid-template-columns: 80% auto;
+  grid-template-rows: 100% auto;
+  border: 10px solid transparent;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+}
+
+.map {
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  background: black;
+  border: 2px solid #779;
+}
+
+/* STATS */
+
+.stats {
+  color: white;
+  text-align: center;
+  margin: 0 auto;
+  border-collapse: collapse;
+}
+
+.stats tr {
+  vertical-align: bottom;
+  border: 2px solid #aaa;
+  background: rgba(0,0,0,.3);
+}
+
+.stat {
+  padding: 10px 14px 13px;
+}
+
+.stat-title {
+  font-size: 24px;
+  letter-spacing: 2px;
+  text-transform: capitalize;
+  padding-right: 10px;
+  text-align: left;
+  font-weight: bold;
+}
+
+.stat-val {
+  font-size: 26px;
+  text-align: right;
+  font-family: monospace;
+}
+
+.stat-ore   { color: #ddd; }
+.stat-spice { color: #fcc; }
+.stat-food  { color: #cfc; }
+.stat-fuel  { color: #ffa; }
+.stat-pop   { color: #aff; }
+.stat-robot { color: #fff; }

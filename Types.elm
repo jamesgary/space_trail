@@ -1,6 +1,6 @@
 module Types exposing (..)
 
-import Time
+import Navigation
 
 
 type alias Model =
@@ -10,7 +10,30 @@ type alias Model =
 
 type State
     = Start
+    | Turn TurnData
+
+
+type alias TurnData =
+    { ore : Int
+    , spice : Int
+    , food : Int
+    , fuel : Int
+    , pop : Int
+    , robot : Int
+    }
 
 
 type Msg
-    = Noop
+    = ClickStart
+    | UrlChange Navigation.Location
+
+
+initTurnData : TurnData
+initTurnData =
+    { ore = 420
+    , spice = 69
+    , food = 123
+    , fuel = 999
+    , pop = 27
+    , robot = 101
+    }
