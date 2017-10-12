@@ -54,5 +54,9 @@ initTurnData =
           , pos = Pos 300 300
           , rad = 30
           }
+        , { color = Color.green
+          , pos = Pos 300 300
+          , rad = 300
+          }
         ]
     }
