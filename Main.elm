@@ -27,13 +27,37 @@ init location =
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg model =
+update msg ({ state } as model) =
     case msg of
         ClickStart ->
             ( { state = Turn initTurnData }, Cmd.none )
 
         UrlChange url ->
             ( model, Cmd.none )
+
+        ClickPlanet planet ->
+            case state of
+                Turn turnData ->
+                    let
+                        newState =
+                            Turn { turnData | visitingPlanet = Just planet }
+                    in
+                    ( { model | state = newState }, Cmd.none )
+
+                _ ->
+                    Debug.log "Should never happen!" ( model, Cmd.none )
+
+        Dismiss ->
+            case state of
+                Turn turnData ->
+                    let
+                        newState =
+                            Turn { turnData | visitingPlanet = Nothing }
+                    in
+                    ( { model | state = newState }, Cmd.none )
+
+                _ ->
+                    Debug.log "Should never happen!" ( model, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg

@@ -20,16 +20,17 @@ html, body {
 .btn {
   cursor: pointer;
   color: white;
-  background: #3cd;
+  background: #2ac;
   border: 2px solid #199;
-  padding: 20px;
+  padding: 20px 30px;
   border-radius: 10px;
   display: inline-block;
+  margin: 0 30px;
 }
 
 .btn:hover {
-  background: #2ab;
-  border: 2px solid #099;
+  background: #09a;
+  border: 2px solid #088;
 }
 
 .screen {
@@ -101,6 +102,18 @@ html, body {
   height: 450px;
 }
 
+.planet {
+  stroke-width: 0px;
+  stroke: #19f6e8;
+  transition: stroke-width 0.35s;
+  transition-timing-function: cubic-bezier(0,.99,.84,1);
+  cursor: pointer;
+}
+
+.planet:hover {
+  stroke-width: 0.8%;
+}
+
 /* STATS */
 
 .stats {
@@ -143,3 +156,25 @@ html, body {
 .stat-fuel  { color: #ffa; }
 .stat-pop   { color: #aff; }
 .stat-robot { color: #fff; }
+
+/* MODAL */
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  z-index: 420;
+  transform: translate(-50%, -50%);
+  background: #eee;
+  padding: 80px 80px 70px;
+  opacity: 1;
+  /*transition: all 0.5s;*/
+  border-radius: 20px;
+  box-shadow: 0 0 0 10000px rgba(0,0,0,.5)
+}
+
+.modal-hidden {
+  z-index: -1;
+  opacity: 0;
+  top: 60%;
+}

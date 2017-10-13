@@ -38,7 +38,22 @@ viewTurn turnData =
                 [ ViewMap.viewPlanets turnData.planets ]
             ]
         , viewStats turnData
+        , viewVisitingPlanet turnData.visitingPlanet
         ]
+
+
+viewVisitingPlanet : Maybe Planet -> Html Msg
+viewVisitingPlanet maybePlanet =
+    case maybePlanet of
+        Just planet ->
+            div [ class "modal" ]
+                [ p [] [ text planet.mission ]
+                , div [ class "btn" ] [ text "OK" ]
+                , div [ class "btn", onClick Dismiss ] [ text "Cancel" ]
+                ]
+
+        Nothing ->
+            div [ class "modal modal-hidden" ] []
 
 
 viewStats : TurnData -> Html Msg

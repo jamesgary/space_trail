@@ -4,6 +4,7 @@ import Color exposing (Color)
 import Html exposing (Html)
 import Svg exposing (circle, rect, svg)
 import Svg.Attributes exposing (..)
+import Svg.Events exposing (..)
 import Types exposing (..)
 
 
@@ -15,13 +16,14 @@ viewPlanets planets =
 
 
 viewPlanet : Planet -> Html Msg
-viewPlanet { color, pos, rad } =
+viewPlanet ({ color, pos, rad } as planet) =
     circle
         [ class "planet"
         , cx <| toString pos.x
         , cy <| toString pos.y
         , r <| toString rad
         , fill <| colorString color
+        , onClick (ClickPlanet planet)
         ]
         []
 
