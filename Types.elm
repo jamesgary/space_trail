@@ -50,13 +50,26 @@ initTurnData =
     , pop = 27
     , robot = 101
     , planets =
-        [ { color = Color.lightRed
-          , pos = Pos 300 300
+        [ { color = Color.gray
+          , pos = Pos 790 150
           , rad = 30
           }
-        , { color = Color.green
-          , pos = Pos 300 300
-          , rad = 300
+        , { color = Color.brown
+          , pos = Pos 500 300
+          , rad = 200
+          }
+        , { color = Color.lightBlue
+          , pos = Pos 1300 600
+          , rad = 200
+          }
+        , { color = Color.yellow
+          , pos = Pos 0 2700
+          , rad = 2000
           }
         ]
     }
+
+
+px : number -> String
+px num =
+    toString num ++ "px"

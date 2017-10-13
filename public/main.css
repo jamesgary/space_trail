@@ -15,11 +15,6 @@ html, body {
   bottom: 0;
   left: 0;
   margin: auto;
-
-  width: 100vw;
-  height: 56.25vw;
-  max-height: 100vh;
-  max-width: 177.78vh;
 }
 
 .btn {
@@ -66,30 +61,44 @@ html, body {
 
 .screen.screen-turn {
   display: grid;
-  background: #122;
+  background: #888;
   text-align: center;
-  grid-template-columns: 80% auto;
-  grid-template-rows: 100% auto;
+  grid-template-columns: 800px 200px;
+  grid-template-rows: 450px;
+  grid-gap: 15px;
   border: 10px solid transparent;
   width: 100%;
   height: 100%;
   box-sizing: border-box;
 }
 
+
 /* MAP */
 
-.map {
+.map-container {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
   grid-row-end: 2;
-  background: black;
-  border: 2px solid #779;
+  border: 2px solid #336;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-.planet {
-  border-radius: 100%;
-  position: absolute;
+.bg {
+  z-index: 0;
+}
+
+.planets-container {
+  position: relative;
+  z-index: 5;
+}
+
+.map {
+  width: 800px;
+  height: 450px;
 }
 
 /* STATS */
@@ -99,6 +108,7 @@ html, body {
   text-align: center;
   margin: 0 auto;
   border-collapse: collapse;
+  width: 100%;
 }
 
 .stats tr {
@@ -109,7 +119,7 @@ html, body {
 
 .stat {
   padding: 10px 14px 13px;
-  font-size: 2vmin;
+  font-size: 24px;
 }
 
 .stat-title {

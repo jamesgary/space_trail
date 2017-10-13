@@ -5,6 +5,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick)
 import Types exposing (..)
+import ViewMap
 
 
 view : Model -> Html Msg
@@ -28,31 +29,16 @@ viewStart =
 viewTurn : TurnData -> Html Msg
 viewTurn turnData =
     div [ class "screen screen-turn" ]
-        [ viewMap turnData.planets
+        [ div [ class "map-container" ]
+            [ div [ class "bg" ]
+                [ div [ class "stars" ] []
+                , div [ class "twinkling" ] []
+                ]
+            , div [ class "planets-container" ]
+                [ ViewMap.viewPlanets turnData.planets ]
+            ]
         , viewStats turnData
         ]
-
-
-viewMap : List Planet -> Html Msg
-viewMap planets =
-    div [ class "map" ] (List.map viewPlanet planets)
-
-
-viewPlanet : Planet -> Html Msg
-viewPlanet { color, pos, rad } =
-    div
-        [ class "planet"
-        , style
-            (Debug.log "DAFAUQ"
-                [ ( "top", px pos.y )
-                , ( "left", px pos.x )
-                , ( "width", px rad )
-                , ( "height", px rad )
-                , ( "background", colorString color )
-                ]
-            )
-        ]
-        []
 
 
 viewStats : TurnData -> Html Msg
@@ -81,20 +67,3 @@ viewStat name val =
 px : number -> String
 px num =
     toString num ++ "px"
-
-
-colorString : Color -> String
-colorString color =
-    let
-        { red, green, blue, alpha } =
-            Color.toRgb color
-    in
-    "rgba("
-        ++ toString red
-        ++ ", "
-        ++ toString green
-        ++ ", "
-        ++ toString blue
-        ++ ", "
-        ++ toString alpha
-        ++ ")"
