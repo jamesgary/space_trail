@@ -47,13 +47,52 @@ viewVisitingPlanet maybePlanet =
     case maybePlanet of
         Just planet ->
             div [ class "modal" ]
-                [ p [] [ text planet.mission ]
-                , div [ class "btn" ] [ text "OK" ]
-                , div [ class "btn", onClick Dismiss ] [ text "Cancel" ]
-                ]
+                [ viewMission planet.mission ]
 
         Nothing ->
             div [ class "modal modal-hidden" ] []
+
+
+viewMission : Mission -> Html Msg
+viewMission mission =
+    div []
+        (List.concat
+            [ [ p [] [ text mission.description ] ]
+            , List.map viewChoice mission.choices
+            , [ div [ class "btn", onClick Dismiss ] [ text "Cancel" ] ]
+            ]
+        )
+
+
+viewChoice : Choice -> Html Msg
+viewChoice choice =
+    div [ class "btn" ]
+        [ text choice.name
+        , div [ class "hint" ] (List.map viewEffect choice.effects)
+        ]
+
+
+viewEffect : Effect -> Html Msg
+viewEffect ( op, amt, resource ) =
+    let
+        ( opText, opClass ) =
+            case op of
+                Gain ->
+                    ( "Gain", "gain" )
+
+                Lose ->
+                    ( "Lose", "lose" )
+
+        effectText =
+            opText ++ " " ++ toString amt ++ " " ++ strFromResource resource
+    in
+    span []
+        [ span [] [ text effectText ]
+        ]
+
+
+
+--<span class="gain">Gain <span="class"="ore">100 Ore</span></span>
 
 
 viewStats : TurnData -> Html Msg
