@@ -129,11 +129,11 @@ viewStats : TurnData -> Html Msg
 viewStats { ore, spice, food, fuel, pop, robot } =
     table [ class "stats" ]
         (List.concat
-            [ viewStat "ore" ore
-            , viewStat "spice" spice
+            [ viewStat "pop" pop
             , viewStat "food" food
             , viewStat "fuel" fuel
-            , viewStat "pop" pop
+            , viewStat "ore" ore
+            , viewStat "spice" spice
             , viewStat "robot" robot
             ]
         )
