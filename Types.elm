@@ -6,6 +6,7 @@ import Navigation
 
 type alias Model =
     { state : State
+    , jumpState : JumpState
     }
 
 
@@ -74,6 +75,13 @@ type Msg
     | UrlChange Navigation.Location
     | ClickPlanet Planet
     | Dismiss
+    | InitiateJump
+    | EndJump
+
+
+type JumpState
+    = Still
+    | Jumping
 
 
 initTurnData : TurnData

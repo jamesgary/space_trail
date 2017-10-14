@@ -2,7 +2,9 @@ module Main exposing (main)
 
 import Html
 import Navigation
-import Time
+import Process
+import Task
+import Time exposing (Time)
 import Types exposing (..)
 import View exposing (view)
 
@@ -20,17 +22,17 @@ init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
     case location.hash of
         "#turn" ->
-            ( { state = Turn initTurnData }, Cmd.none )
+            ( { state = Turn initTurnData, jumpState = Still }, Cmd.none )
 
         _ ->
-            ( { state = Start }, Cmd.none )
+            ( { state = Start, jumpState = Still }, Cmd.none )
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg ({ state } as model) =
     case msg of
         ClickStart ->
-            ( { state = Turn initTurnData }, Cmd.none )
+            ( { state = Turn initTurnData, jumpState = Still }, Cmd.none )
 
         UrlChange url ->
             ( model, Cmd.none )
@@ -59,10 +61,35 @@ update msg ({ state } as model) =
                 _ ->
                     Debug.log "Should never happen!" ( model, Cmd.none )
 
+        InitiateJump ->
+            case state of
+                Turn turnData ->
+                    ( { model | jumpState = Jumping }
+                    , delay (Time.second * 0.5) <| EndJump
+                    )
+
+                _ ->
+                    Debug.log "Should never happen!" ( model, Cmd.none )
+
+        EndJump ->
+            case state of
+                Turn turnData ->
+                    ( { model | jumpState = Still }, Cmd.none )
+
+                _ ->
+                    Debug.log "Should never happen!" ( model, Cmd.none )
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
     Sub.none
+
+
+delay : Time -> msg -> Cmd msg
+delay time msg =
+    Process.sleep time
+        |> Task.andThen (always <| Task.succeed msg)
+        |> Task.perform identity
 
 
 

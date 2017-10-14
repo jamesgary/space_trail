@@ -9,13 +9,24 @@ import ViewMap
 
 
 view : Model -> Html Msg
-view model =
-    case model.state of
-        Start ->
-            viewStart
+view { state, jumpState } =
+    let
+        classname =
+            case jumpState of
+                Still ->
+                    "elm"
 
-        Turn turnData ->
-            viewTurn turnData
+                Jumping ->
+                    "elm elm-jumping"
+    in
+    div [ class classname ]
+        [ case state of
+            Start ->
+                viewStart
+
+            Turn turnData ->
+                viewTurn turnData
+        ]
 
 
 viewStart : Html Msg
@@ -47,7 +58,7 @@ viewTurn turnData =
 
 viewJumpButton : Html Msg
 viewJumpButton =
-    div [ class "btn btn-jump" ] [ text "JUMP" ]
+    div [ class "btn btn-jump", onClick InitiateJump ] [ text "JUMP" ]
 
 
 viewVisitingPlanet : Maybe Planet -> Html Msg
