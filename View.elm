@@ -66,7 +66,7 @@ viewVisitingPlanet : Maybe Planet -> Html Msg
 viewVisitingPlanet maybePlanet =
     case maybePlanet of
         Just planet ->
-            div [ class "modal" ]
+            div [ class "modal modal-minigame" ]
                 [ p [] [ text "MINIGAME STUFF GO HERE" ]
                 , div [ class "btn", onClick Dismiss ] [ text "hell yeah" ]
                 , div [ class "btn", onClick Dismiss ] [ text "hell no" ]

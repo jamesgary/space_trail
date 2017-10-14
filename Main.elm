@@ -56,8 +56,7 @@ initTurnData =
           }
         ]
     , visitingPlanet = Nothing
-    , crisis =
-        Just initCrisis
+    , crisis = Nothing
     }
 
 
@@ -216,20 +215,6 @@ applyEffect ( operator, amt, resource ) turnData =
 
         Robot ->
             { turnData | robot = currentAmt + delta }
-
-
-
---jtype alias TurnData =
---j    { ore : Int
---j    , spice : Int
---j    , food : Int
---j    , fuel : Int
---j    , pop : Int
---j    , robot : Int
---j    , planets : List Planet
---j    , visitingPlanet : Maybe Planet
---j    , crisis : Maybe Crisis
---j    }
 
 
 subscriptions : Model -> Sub Msg

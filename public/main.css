@@ -252,3 +252,12 @@ html, body {
 .lose {
   color: #f00;
 }
+
+/* MODAL - MINIGAME */
+
+.modal.modal-minigame {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px 40px 30px;
+}
