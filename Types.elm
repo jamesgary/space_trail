@@ -24,6 +24,7 @@ type alias TurnData =
     , robot : Int
     , planets : List Planet
     , visitingPlanet : Maybe Planet
+    , crisis : Maybe Crisis
     }
 
 
@@ -31,8 +32,6 @@ type alias Planet =
     { color : Color
     , pos : Pos
     , rad : Int
-
-    --, mission : Mission
     }
 
 
@@ -40,8 +39,9 @@ type alias Pos =
     { x : Int, y : Int }
 
 
-type alias Mission =
-    { description : String
+type alias Crisis =
+    { title : String
+    , description : String
     , choices : List Choice
     }
 
@@ -77,41 +77,12 @@ type Msg
     | Dismiss
     | InitiateJump
     | EndJump
+    | ResolveCrisis (List Effect)
 
 
 type JumpState
     = Still
     | Jumping
-
-
-initTurnData : TurnData
-initTurnData =
-    { ore = 420
-    , spice = 69
-    , food = 123
-    , fuel = 999
-    , pop = 27
-    , robot = 101
-    , planets =
-        [ { color = Color.gray
-          , pos = Pos 790 150
-          , rad = 30
-          }
-        , { color = Color.brown
-          , pos = Pos 500 300
-          , rad = 200
-          }
-        , { color = Color.lightBlue
-          , pos = Pos 1300 600
-          , rad = 200
-          }
-        , { color = Color.yellow
-          , pos = Pos 0 2700
-          , rad = 2000
-          }
-        ]
-    , visitingPlanet = Nothing
-    }
 
 
 px : number -> String

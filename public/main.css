@@ -189,11 +189,11 @@ html, body {
 .modal {
   position: fixed;
   top: 50%;
-  left: 50%;
+  left: 10%;
   z-index: 420;
-  transform: translate(-50%, -50%);
+  transform: translate(-5%, -50%);
   background: #eee;
-  padding: 80px 80px 70px;
+  padding: 10px 40px 30px;
   opacity: 1;
   /*transition: all 0.5s;*/
   border-radius: 20px;
@@ -206,13 +206,22 @@ html, body {
   top: 60%;
 }
 
+.modal h1 {
+  text-align: left;
+}
+
 .modal p {
   margin-bottom: 30px;
+  text-align: left;
+  font-size: 18px;
+  font-family: 'Raleway', sans-serif;
 }
 
 .modal .btn {
-  padding: 15px 25px 16px;
+  padding: 10px 15px 11px;
   position: relative;
+  font-size: 16px;
+  margin: 10px 20px 0;
 }
 
 .hint {

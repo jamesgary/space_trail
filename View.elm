@@ -53,6 +53,7 @@ viewTurn turnData =
             , viewJumpButton
             ]
         , viewVisitingPlanet turnData.visitingPlanet
+        , viewCrisis turnData.crisis
         ]
 
 
@@ -75,22 +76,29 @@ viewVisitingPlanet maybePlanet =
             div [ class "modal modal-hidden" ] []
 
 
-viewMission : Mission -> Html Msg
-viewMission mission =
-    div []
-        (List.concat
-            [ [ p [] [ text mission.description ] ]
-            , List.map viewChoice mission.choices
-            , [ div [ class "btn", onClick Dismiss ] [ text "Cancel" ] ]
-            ]
-        )
+viewCrisis : Maybe Crisis -> Html Msg
+viewCrisis crisis =
+    case crisis of
+        Just { title, description, choices } ->
+            div [ class "modal" ]
+                (List.concat
+                    [ [ h1 [] [ text title ] ]
+                    , [ p [] [ text description ] ]
+                    , List.map viewChoice choices
+
+                    --, [ div [ class "btn", onClick Dismiss ] [ text "Cancel" ] ]
+                    ]
+                )
+
+        Nothing ->
+            div [] []
 
 
 viewChoice : Choice -> Html Msg
-viewChoice choice =
-    div [ class "btn" ]
-        [ text choice.name
-        , div [ class "hint" ] (List.map viewEffect choice.effects)
+viewChoice { name, effects } =
+    div [ class "btn", onClick (ResolveCrisis effects) ]
+        [ text name
+        , div [ class "hint" ] (List.map viewEffect effects)
         ]
 
 
