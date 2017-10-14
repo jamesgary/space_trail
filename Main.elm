@@ -63,7 +63,10 @@ initTurnData =
 initCrisis : Crisis
 initCrisis =
     { title = "Heat Death"
-    , description = "You awake one morning-cycle and find you can see your own breath. “We have a problem,” your assistant informs you before you can even finish inserting your caffeine suppository. It seems the ship's temperature regulation systems are failing. The entire ship is losing heat and several populated sections of the ship are already freezing cold and getting colder. The Skillicus Machinicus assures you that the systems can be fixed – but not before people have died. Your navigator suggests that they move off-course and closer to the nearest star in order to warm the ship up while the engineers fix the systems – it will cost precious fuel but save lives. The Pickax proxy suggests disassembling some of your robots and using their batteries to power heating devices. What should we do?"
+    , description =
+        """
+        You awake one morning-cycle and find you can see your own breath. "We have a problem," your assistant informs you before you can even finish inserting your caffeine suppository. It seems the ship's temperature regulation systems are failing. The entire ship is losing heat and several populated sections of the ship are already freezing cold and getting colder. The Skillicus Machinicus assures you that the systems can be fixed - but not before people have died. Your navigator suggests that they move off-course and closer to the nearest star in order to warm the ship up while the engineers fix the systems – it will cost precious fuel but save lives. The Pickax proxy suggests disassembling some of your robots and using their batteries to power heating devices. What should we do?
+        """
     , choices =
         [ { name = "Repair System"
           , effects =
