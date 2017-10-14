@@ -74,6 +74,21 @@ html, body {
   box-sizing: border-box;
 }
 
+.btn-jump {
+  background: red;
+  border: 2px outset red;
+  width: 100%;
+  margin: 20px 0;
+  width: 220px;
+  box-sizing: border-box;
+  font-size: 36px;
+  padding: 10px;
+}
+
+.btn-jump:hover {
+  background: darkred;
+  border: 2px outset darkred;
+}
 
 /* MAP */
 

@@ -37,9 +37,17 @@ viewTurn turnData =
             , div [ class "planets-container" ]
                 [ ViewMap.viewPlanets turnData.planets ]
             ]
-        , viewStats turnData
+        , div [ class "controls-container" ]
+            [ viewStats turnData
+            , viewJumpButton
+            ]
         , viewVisitingPlanet turnData.visitingPlanet
         ]
+
+
+viewJumpButton : Html Msg
+viewJumpButton =
+    div [ class "btn btn-jump" ] [ text "JUMP" ]
 
 
 viewVisitingPlanet : Maybe Planet -> Html Msg
@@ -47,7 +55,10 @@ viewVisitingPlanet maybePlanet =
     case maybePlanet of
         Just planet ->
             div [ class "modal" ]
-                [ viewMission planet.mission ]
+                [ p [] [ text "MINIGAME STUFF GO HERE" ]
+                , div [ class "btn", onClick Dismiss ] [ text "hell yeah" ]
+                , div [ class "btn", onClick Dismiss ] [ text "hell no" ]
+                ]
 
         Nothing ->
             div [ class "modal modal-hidden" ] []

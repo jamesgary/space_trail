@@ -30,7 +30,8 @@ type alias Planet =
     { color : Color
     , pos : Pos
     , rad : Int
-    , mission : Mission
+
+    --, mission : Mission
     }
 
 
@@ -87,31 +88,19 @@ initTurnData =
         [ { color = Color.gray
           , pos = Pos 790 150
           , rad = 30
-          , mission =
-                { description = "This moon is rich in CALCIUM. Do you wish to mine?"
-                , choices =
-                    [ { name = "Mine away!"
-                      , effects = [ ( Gain, 100, Ore ) ]
-                      }
-                    ]
-                }
           }
-
-        --, { color = Color.brown
-        --  , pos = Pos 500 300
-        --  , rad = 200
-        --  , mission = "The spice flows deep in this planet. Do you wish to harvest?"
-        --  }
-        --, { color = Color.lightBlue
-        --  , pos = Pos 1300 600
-        --  , rad = 200
-        --  , mission = "POOL PARTY!"
-        --  }
-        --, { color = Color.yellow
-        --  , pos = Pos 0 2700
-        --  , rad = 2000
-        --  , mission = "The sun is too hot to travel to. You need LEVEL 4 SPACESUITS."
-        --  }
+        , { color = Color.brown
+          , pos = Pos 500 300
+          , rad = 200
+          }
+        , { color = Color.lightBlue
+          , pos = Pos 1300 600
+          , rad = 200
+          }
+        , { color = Color.yellow
+          , pos = Pos 0 2700
+          , rad = 2000
+          }
         ]
     , visitingPlanet = Nothing
     }
