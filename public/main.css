@@ -51,6 +51,10 @@ html, body {
   display: flex;
 }
 
+.hidden {
+  display: none !important;
+}
+
 /* START SCREEN */
 
 .screen.screen-start {
@@ -139,6 +143,15 @@ html, body {
 
 .planet:hover {
   stroke-width: 0.8%;
+}
+
+/* CONTROLS */
+
+.controls-container {
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 1;
+  grid-row-end: 2;
 }
 
 /* STATS */
@@ -255,9 +268,20 @@ html, body {
 
 /* MODAL - MINIGAME */
 
-.modal.modal-minigame {
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  padding: 20px 40px 30px;
+.mission {
+  width: 100%;
+  height: 100%;
+}
+
+.mission-container {
+  border: 2px solid #336;
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  color: #0f0;
+}
+
+.mission p {
+  margin: 0;
 }

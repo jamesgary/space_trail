@@ -26,20 +26,3 @@ viewPlanet ({ color, pos, rad } as planet) =
         , onClick (ClickPlanet planet)
         ]
         []
-
-
-colorString : Color -> String
-colorString color =
-    let
-        { red, green, blue, alpha } =
-            Color.toRgb color
-    in
-    "rgba("
-        ++ toString red
-        ++ ", "
-        ++ toString green
-        ++ ", "
-        ++ toString blue
-        ++ ", "
-        ++ toString alpha
-        ++ ")"

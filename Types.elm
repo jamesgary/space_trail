@@ -23,8 +23,13 @@ type alias TurnData =
     , pop : Int
     , robot : Int
     , planets : List Planet
-    , visitingPlanet : Maybe Planet
+    , mission : Maybe Mission
     , crisis : Maybe Crisis
+    }
+
+
+type alias Mission =
+    { planet : Planet
     }
 
 
@@ -110,3 +115,20 @@ strFromResource resource =
 
         Robot ->
             "Robot"
+
+
+colorString : Color -> String
+colorString color =
+    let
+        { red, green, blue, alpha } =
+            Color.toRgb color
+    in
+    "rgba("
+        ++ toString red
+        ++ ", "
+        ++ toString green
+        ++ ", "
+        ++ toString blue
+        ++ ", "
+        ++ toString alpha
+        ++ ")"

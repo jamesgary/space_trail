@@ -38,9 +38,18 @@ viewStart =
 
 
 viewTurn : TurnData -> Html Msg
-viewTurn turnData =
+viewTurn ({ mission, planets, crisis } as turnData) =
+    let
+        ( mapClass, missionClass ) =
+            case turnData.mission of
+                Just mission ->
+                    ( "map-container hidden", "mission-container" )
+
+                Nothing ->
+                    ( "map-container", "mission-container hidden" )
+    in
     div [ class "screen screen-turn" ]
-        [ div [ class "map-container" ]
+        [ div [ class mapClass ]
             [ div [ class "bg" ]
                 [ div [ class "stars" ] []
                 , div [ class "twinkling" ] []
@@ -52,8 +61,10 @@ viewTurn turnData =
             [ viewStats turnData
             , viewJumpButton
             ]
-        , viewVisitingPlanet turnData.visitingPlanet
-        , viewCrisis turnData.crisis
+        , div [ class missionClass ]
+            [ viewMission turnData.mission
+            , viewCrisis turnData.crisis
+            ]
         ]
 
 
@@ -62,18 +73,18 @@ viewJumpButton =
     div [ class "btn btn-jump", onClick InitiateJump ] [ text "JUMP" ]
 
 
-viewVisitingPlanet : Maybe Planet -> Html Msg
-viewVisitingPlanet maybePlanet =
-    case maybePlanet of
-        Just planet ->
-            div [ class "modal modal-minigame" ]
+viewMission : Maybe Mission -> Html Msg
+viewMission maybeMission =
+    case maybeMission of
+        Just mission ->
+            div [ class "mission", style [ ( "background-color", colorString mission.planet.color ) ] ]
                 [ p [] [ text "MINIGAME STUFF GO HERE" ]
                 , div [ class "btn", onClick Dismiss ] [ text "hell yeah" ]
                 , div [ class "btn", onClick Dismiss ] [ text "hell no" ]
                 ]
 
         Nothing ->
-            div [ class "modal modal-hidden" ] []
+            div [ class "mission" ] []
 
 
 viewCrisis : Maybe Crisis -> Html Msg

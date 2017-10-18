@@ -22,6 +22,9 @@ main =
 init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
     case location.hash of
+        "#mission" ->
+            ( { state = Turn initTurnDataWithMission, jumpState = Still }, Cmd.none )
+
         "#turn" ->
             ( { state = Turn initTurnData, jumpState = Still }, Cmd.none )
 
@@ -55,7 +58,45 @@ initTurnData =
           , rad = 2000
           }
         ]
-    , visitingPlanet = Nothing
+    , mission = Nothing
+    , crisis = Nothing
+    }
+
+
+initTurnDataWithMission : TurnData
+initTurnDataWithMission =
+    { ore = 420
+    , spice = 69
+    , food = 123
+    , fuel = 999
+    , pop = 27
+    , robot = 101
+    , planets =
+        [ { color = Color.gray
+          , pos = Pos 790 150
+          , rad = 30
+          }
+        , { color = Color.brown
+          , pos = Pos 500 300
+          , rad = 200
+          }
+        , { color = Color.lightBlue
+          , pos = Pos 1300 600
+          , rad = 200
+          }
+        , { color = Color.yellow
+          , pos = Pos 0 2700
+          , rad = 2000
+          }
+        ]
+    , mission =
+        Just
+            { planet =
+                { color = Color.brown
+                , pos = Pos 500 300
+                , rad = 200
+                }
+            }
     , crisis = Nothing
     }
 
@@ -111,7 +152,7 @@ update msg ({ state } as model) =
                 Turn turnData ->
                     let
                         newState =
-                            Turn { turnData | visitingPlanet = Just planet }
+                            Turn { turnData | mission = Just { planet = planet } }
                     in
                     ( { model | state = newState }, Cmd.none )
 
@@ -123,7 +164,7 @@ update msg ({ state } as model) =
                 Turn turnData ->
                     let
                         newState =
-                            Turn { turnData | visitingPlanet = Nothing }
+                            Turn { turnData | mission = Nothing }
                     in
                     ( { model | state = newState }, Cmd.none )
 
