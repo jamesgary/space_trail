@@ -78,9 +78,14 @@ viewMission maybeMission =
     case maybeMission of
         Just mission ->
             div [ class "mission", style [ ( "background-color", colorString mission.planet.color ) ] ]
-                [ p [] [ text "MINIGAME STUFF GO HERE" ]
-                , div [ class "btn", onClick Dismiss ] [ text "hell yeah" ]
-                , div [ class "btn", onClick Dismiss ] [ text "hell no" ]
+                [ div
+                    [ class "miner"
+                    , style
+                        [ ( "top", px mission.map.miner.y )
+                        , ( "left", px mission.map.miner.x )
+                        ]
+                    ]
+                    []
                 ]
 
         Nothing ->

@@ -30,6 +30,14 @@ type alias TurnData =
 
 type alias Mission =
     { planet : Planet
+    , map : Map
+    }
+
+
+type alias Map =
+    { width : Int
+    , height : Int
+    , miner : Pos
     }
 
 

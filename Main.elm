@@ -96,8 +96,17 @@ initTurnDataWithMission =
                 , pos = Pos 500 300
                 , rad = 200
                 }
+            , map = initMap
             }
     , crisis = Nothing
+    }
+
+
+initMap : Map
+initMap =
+    { width = 800
+    , height = 450
+    , miner = Pos 100 100
     }
 
 
@@ -152,7 +161,7 @@ update msg ({ state } as model) =
                 Turn turnData ->
                     let
                         newState =
-                            Turn { turnData | mission = Just { planet = planet } }
+                            Turn { turnData | mission = Just { planet = planet, map = initMap } }
                     in
                     ( { model | state = newState }, Cmd.none )
 
