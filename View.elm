@@ -3,7 +3,8 @@ module View exposing (view)
 import Color exposing (Color)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+import Html.Events exposing (on, onClick)
+import Json.Decode as Decode
 import Types exposing (..)
 import ViewMap
 
@@ -77,7 +78,7 @@ viewMission : Maybe Mission -> Html Msg
 viewMission maybeMission =
     case maybeMission of
         Just mission ->
-            div [ class "mission", style [ ( "background-color", colorString mission.planet.color ) ] ]
+            div [ onMouseDown, class "mission", style [ ( "background-color", colorString mission.planet.color ) ] ]
                 [ div
                     [ class "miner"
                     , style
@@ -167,3 +168,33 @@ viewStat name val =
 px : number -> String
 px num =
     toString num ++ "px"
+
+
+onMouseDown : Attribute Msg
+onMouseDown =
+    on "mousedown" (Decode.map ClickMap decodeClickLocation)
+
+
+
+--onMouseUp : Attribute Msg
+--onMouseUp =
+--    on "mouseup" (Decode.map MouseUp decodeClickLocation)
+
+
+decodeClickLocation : Decode.Decoder ( Float, Float )
+decodeClickLocation =
+    Decode.map2 (,)
+        (Decode.at [ "offsetX" ] Decode.float)
+        (Decode.at [ "offsetY" ] Decode.float)
+
+
+
+--Decode.map2 (,)
+--    (Decode.map2 (/)
+--        (Decode.at [ "offsetX" ] Decode.float)
+--        (Decode.at [ "target", "clientWidth" ] Decode.float)
+--    )
+--    (Decode.map2 (/)
+--        (Decode.at [ "offsetY" ] Decode.float)
+--        (Decode.at [ "target", "clientHeight" ] Decode.float)
+--    )

@@ -213,6 +213,42 @@ update msg ({ state } as model) =
                 _ ->
                     Debug.log "Should never happen!" ( model, Cmd.none )
 
+        ClickMap ( x, y ) ->
+            let
+                _ =
+                    Debug.log "pos" ( x, y )
+            in
+            case state of
+                Turn turnData ->
+                    case turnData.mission of
+                        Just mission ->
+                            let
+                                map =
+                                    mission.map
+
+                                miner =
+                                    mission.map.miner
+
+                                newMiner =
+                                    Pos (round x) (round y)
+
+                                newMap =
+                                    { map | miner = newMiner }
+
+                                newMission =
+                                    { mission | map = newMap }
+
+                                newTurnData =
+                                    { turnData | mission = Just newMission }
+                            in
+                            ( { model | state = Turn newTurnData }, Cmd.none )
+
+                        _ ->
+                            Debug.log "Should never happen!" ( model, Cmd.none )
+
+                _ ->
+                    Debug.log "Should never happen!" ( model, Cmd.none )
+
 
 applyEffects : List Effect -> TurnData -> TurnData
 applyEffects effects turnData =

@@ -91,6 +91,11 @@ type Msg
     | InitiateJump
     | EndJump
     | ResolveCrisis (List Effect)
+    | ClickMap MousePos
+
+
+type alias MousePos =
+    ( Float, Float )
 
 
 type JumpState
