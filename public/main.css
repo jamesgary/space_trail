@@ -89,15 +89,27 @@ html, body {
   box-sizing: border-box;
 }
 
+.btn.btn-fancy {
+  width: 100%;
+  margin: 10px 0 0;
+  box-sizing: border-box;
+  font-size: 28px;
+  padding: 10px;
+}
+
+.btn-view-council {
+  background: orange;
+  border: 2px outset orange;
+}
+
+.btn-view-council:hover {
+  background: darkorange;
+  border: 2px outset darkorange;
+}
+
 .btn-jump {
   background: red;
   border: 2px outset red;
-  width: 100%;
-  margin: 20px 0;
-  width: 220px;
-  box-sizing: border-box;
-  font-size: 36px;
-  padding: 10px;
 }
 
 .btn-jump:hover {
@@ -107,7 +119,7 @@ html, body {
 
 /* MAP */
 
-.map-container {
+.monitor-container {
   grid-column-start: 1;
   grid-column-end: 2;
   grid-row-start: 1;
@@ -172,7 +184,7 @@ html, body {
 
 .stat {
   padding: 10px 14px 13px;
-  font-size: 24px;
+  font-size: 18px;
 }
 
 .stat-title {
@@ -298,4 +310,29 @@ html, body {
   position: absolute;
   background: #f44;
   border-color: #a00;
+}
+
+/* CRISIS */
+
+.crisis {
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  background: black;
+  color: #0f0;
+  text-align: left;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.crisis h1 {
+  margin: 0;
+}
+
+.crisis .btn {
+  padding: 7px 14px 8px;
+  border-radius: 3px;
+  margin: 0 5px;
+  text-align: center;
+  position: relative;
 }

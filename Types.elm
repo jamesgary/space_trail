@@ -24,9 +24,18 @@ type alias TurnData =
     , pop : Int
     , robot : Int
     , planets : List Planet
-    , mission : Maybe Mission
-    , crisis : Maybe Crisis
+    , state : TurnState
+
+    --, mission : Maybe Mission
+    --, crisis : Maybe Crisis
     }
+
+
+type TurnState
+    = Idle
+    | OnMission Mission
+    | FacingCrisis Crisis
+    | VisitingCouncil
 
 
 type alias Mission =
@@ -101,6 +110,7 @@ type Msg
     | ClickMap MousePos
     | Tick Time.Time
     | EndMission
+    | VisitCouncil
 
 
 type alias MousePos =

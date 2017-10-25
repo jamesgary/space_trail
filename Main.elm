@@ -59,8 +59,7 @@ initTurnData =
           , rad = 2000
           }
         ]
-    , mission = Nothing
-    , crisis = Nothing
+    , state = Idle
     }
 
 
@@ -90,8 +89,8 @@ initTurnDataWithMission =
           , rad = 2000
           }
         ]
-    , mission =
-        Just
+    , state =
+        OnMission
             { planet =
                 { color = Color.brown
                 , pos = Pos 500 300
@@ -99,7 +98,6 @@ initTurnDataWithMission =
                 }
             , map = initMap
             }
-    , crisis = Nothing
     }
 
 
@@ -165,7 +163,7 @@ update msg ({ state } as model) =
                 Turn turnData ->
                     let
                         newState =
-                            Turn { turnData | mission = Just { planet = planet, map = initMap } }
+                            Turn { turnData | state = OnMission { planet = planet, map = initMap } }
                     in
                     ( { model | state = newState }, Cmd.none )
 
@@ -177,7 +175,7 @@ update msg ({ state } as model) =
                 Turn turnData ->
                     let
                         newState =
-                            Turn { turnData | mission = Nothing }
+                            Turn { turnData | state = Idle }
                     in
                     ( { model | state = newState }, Cmd.none )
 
@@ -197,7 +195,7 @@ update msg ({ state } as model) =
         EndJump ->
             case state of
                 Turn turnData ->
-                    ( { model | jumpState = Still, state = Turn { turnData | crisis = Just initCrisis } }, Cmd.none )
+                    ( { model | jumpState = Still, state = Turn { turnData | state = FacingCrisis initCrisis } }, Cmd.none )
 
                 _ ->
                     Debug.log "Should never happen!" ( model, Cmd.none )
@@ -210,7 +208,7 @@ update msg ({ state } as model) =
                             applyEffects effects turnData
 
                         newerTurnData =
-                            { newTurnData | crisis = Nothing }
+                            { newTurnData | state = Idle }
                     in
                     ( { model | state = Turn newerTurnData }, Cmd.none )
 
@@ -220,8 +218,8 @@ update msg ({ state } as model) =
         ClickMap ( x, y ) ->
             case state of
                 Turn turnData ->
-                    case turnData.mission of
-                        Just mission ->
+                    case turnData.state of
+                        OnMission mission ->
                             let
                                 map =
                                     mission.map
@@ -239,7 +237,7 @@ update msg ({ state } as model) =
                                     { mission | map = newMap }
 
                                 newTurnData =
-                                    { turnData | mission = Just newMission }
+                                    { turnData | state = OnMission newMission }
                             in
                             ( { model | state = Turn newTurnData }, Cmd.none )
 
@@ -252,25 +250,23 @@ update msg ({ state } as model) =
         EndMission ->
             case state of
                 Turn turnData ->
-                    case turnData.mission of
-                        Just mission ->
-                            let
-                                newTurnData =
-                                    { turnData | mission = Nothing }
-                            in
-                            ( { model | state = Turn newTurnData }, Cmd.none )
-
-                        _ ->
-                            ( model, Cmd.none )
+                    let
+                        newTurnData =
+                            { turnData | state = Idle }
+                    in
+                    ( { model | state = Turn newTurnData }, Cmd.none )
 
                 _ ->
                     ( model, Cmd.none )
 
+        VisitCouncil ->
+            ( model, Cmd.none )
+
         Tick time ->
             case state of
                 Turn turnData ->
-                    case turnData.mission of
-                        Just mission ->
+                    case turnData.state of
+                        OnMission mission ->
                             let
                                 map =
                                     mission.map
@@ -291,7 +287,7 @@ update msg ({ state } as model) =
                                     { mission | map = newMap }
 
                                 newTurnData =
-                                    { turnData | mission = Just newMission }
+                                    { turnData | state = OnMission newMission }
                             in
                             ( { model | state = Turn newTurnData }, Cmd.none )
 

@@ -39,79 +39,87 @@ viewStart =
 
 
 viewTurn : TurnData -> Html Msg
-viewTurn ({ mission, planets, crisis } as turnData) =
+viewTurn ({ planets, state } as turnData) =
     let
-        ( mapClass, missionClass ) =
-            case turnData.mission of
-                Just mission ->
-                    ( "map-container hidden", "mission-container" )
-
-                Nothing ->
-                    ( "map-container", "mission-container hidden" )
+        ( monitorClass, missionClass ) =
+            --case turnData.mission of
+            --    Just mission ->
+            --        ( "map-container hidden", "mission-container" )
+            --    Nothing ->
+            ( "monitor-container", "mission-container hidden" )
     in
     div [ class "screen screen-turn" ]
-        [ div [ class mapClass ]
-            [ div [ class "bg" ]
-                [ div [ class "stars" ] []
-                , div [ class "twinkling" ] []
-                ]
-            , div [ class "planets-container" ]
-                [ ViewMap.viewPlanets turnData.planets ]
-            ]
+        [ div [ class monitorClass ]
+            (case state of
+                Idle ->
+                    [ div [ class "bg" ]
+                        [ div [ class "stars" ] []
+                        , div [ class "twinkling" ] []
+                        ]
+                    , div [ class "planets-container" ]
+                        [ ViewMap.viewPlanets turnData.planets ]
+                    ]
+
+                OnMission mission ->
+                    [ viewMission mission ]
+
+                FacingCrisis crisis ->
+                    [ viewCrisis crisis ]
+
+                _ ->
+                    []
+            )
         , div [ class "controls-container" ]
             [ viewStats turnData
+            , viewCouncilButton
             , viewJumpButton
             ]
-        , div [ class missionClass ]
-            [ viewMission turnData.mission
-            , viewCrisis turnData.crisis
-            ]
+
+        --, div [ class missionClass ]
+        --    [ viewMission turnData.mission
+        --    , viewCrisis turnData.crisis
+        --    ]
         ]
+
+
+viewCouncilButton : Html Msg
+viewCouncilButton =
+    div [ class "btn btn-fancy btn-view-council", onClick VisitCouncil ] [ text "Council" ]
 
 
 viewJumpButton : Html Msg
 viewJumpButton =
-    div [ class "btn btn-jump", onClick InitiateJump ] [ text "JUMP" ]
+    div [ class "btn btn-fancy btn-jump", onClick InitiateJump ] [ text "JUMP" ]
 
 
-viewMission : Maybe Mission -> Html Msg
-viewMission maybeMission =
-    case maybeMission of
-        Just mission ->
-            div [ onMouseDown, class "mission", style [ ( "background-color", colorString mission.planet.color ) ] ]
-                [ div
-                    [ class "miner"
-                    , style
-                        [ ( "top", px mission.map.miner.pos.y )
-                        , ( "left", px mission.map.miner.pos.x )
-                        ]
-                    ]
-                    []
-                , div
-                    [ class "btn btn-end-mission", onClick EndMission ]
-                    [ text "End Mission" ]
+viewMission : Mission -> Html Msg
+viewMission mission =
+    div [ onMouseDown, class "mission", style [ ( "background-color", colorString mission.planet.color ) ] ]
+        [ div
+            [ class "miner"
+            , style
+                [ ( "top", px mission.map.miner.pos.y )
+                , ( "left", px mission.map.miner.pos.x )
                 ]
+            ]
+            []
+        , div
+            [ class "btn btn-end-mission", onClick EndMission ]
+            [ text "End Mission" ]
+        ]
 
-        Nothing ->
-            div [ class "mission" ] []
 
+viewCrisis : Crisis -> Html Msg
+viewCrisis { title, description, choices } =
+    div [ class "crisis" ]
+        (List.concat
+            [ [ h1 [] [ text title ] ]
+            , [ p [] [ text description ] ]
+            , List.map viewChoice choices
 
-viewCrisis : Maybe Crisis -> Html Msg
-viewCrisis crisis =
-    case crisis of
-        Just { title, description, choices } ->
-            div [ class "modal" ]
-                (List.concat
-                    [ [ h1 [] [ text title ] ]
-                    , [ p [] [ text description ] ]
-                    , List.map viewChoice choices
-
-                    --, [ div [ class "btn", onClick Dismiss ] [ text "Cancel" ] ]
-                    ]
-                )
-
-        Nothing ->
-            div [] []
+            --, [ div [ class "btn", onClick Dismiss ] [ text "Cancel" ] ]
+            ]
+        )
 
 
 viewChoice : Choice -> Html Msg
