@@ -1,5 +1,6 @@
 module Main exposing (main)
 
+import AnimationFrame
 import Color
 import Html
 import Navigation
@@ -106,7 +107,10 @@ initMap : Map
 initMap =
     { width = 800
     , height = 450
-    , miner = Pos 100 100
+    , miner =
+        { pos = Pos 100 100
+        , dest = Pos 100 100
+        }
     }
 
 
@@ -214,10 +218,6 @@ update msg ({ state } as model) =
                     Debug.log "Should never happen!" ( model, Cmd.none )
 
         ClickMap ( x, y ) ->
-            let
-                _ =
-                    Debug.log "pos" ( x, y )
-            in
             case state of
                 Turn turnData ->
                     case turnData.mission of
@@ -230,7 +230,7 @@ update msg ({ state } as model) =
                                     mission.map.miner
 
                                 newMiner =
-                                    Pos (round x) (round y)
+                                    { miner | dest = Pos (round x) (round y) }
 
                                 newMap =
                                     { map | miner = newMiner }
@@ -248,6 +248,80 @@ update msg ({ state } as model) =
 
                 _ ->
                     Debug.log "Should never happen!" ( model, Cmd.none )
+
+        EndMission ->
+            case state of
+                Turn turnData ->
+                    case turnData.mission of
+                        Just mission ->
+                            let
+                                newTurnData =
+                                    { turnData | mission = Nothing }
+                            in
+                            ( { model | state = Turn newTurnData }, Cmd.none )
+
+                        _ ->
+                            ( model, Cmd.none )
+
+                _ ->
+                    ( model, Cmd.none )
+
+        Tick time ->
+            case state of
+                Turn turnData ->
+                    case turnData.mission of
+                        Just mission ->
+                            let
+                                map =
+                                    mission.map
+
+                                miner =
+                                    mission.map.miner
+
+                                newPos =
+                                    calculatePosition miner.pos miner.dest time
+
+                                newMiner =
+                                    { miner | pos = newPos }
+
+                                newMap =
+                                    { map | miner = newMiner }
+
+                                newMission =
+                                    { mission | map = newMap }
+
+                                newTurnData =
+                                    { turnData | mission = Just newMission }
+                            in
+                            ( { model | state = Turn newTurnData }, Cmd.none )
+
+                        _ ->
+                            ( model, Cmd.none )
+
+                _ ->
+                    ( model, Cmd.none )
+
+
+calculatePosition : Pos -> Pos -> Time.Time -> Pos
+calculatePosition pos dest timeElapsed =
+    let
+        dragSpeed =
+            0.09
+
+        --1 - (baseWeight / (baseWeight + timeElapsed))
+        distX =
+            dest.x - pos.x
+
+        distY =
+            dest.y - pos.y
+
+        newX =
+            pos.x + round (dragSpeed * toFloat distX)
+
+        newY =
+            pos.y + round (dragSpeed * toFloat distY)
+    in
+    Pos newX newY
 
 
 applyEffects : List Effect -> TurnData -> TurnData
@@ -308,7 +382,12 @@ applyEffect ( operator, amt, resource ) turnData =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    --Sub.none
+    AnimationFrame.times Tick
+
+
+
+--Time.every 100 Tick
 
 
 delay : Time -> msg -> Cmd msg

@@ -2,6 +2,7 @@ module Types exposing (..)
 
 import Color exposing (Color)
 import Navigation
+import Time
 
 
 type alias Model =
@@ -37,7 +38,13 @@ type alias Mission =
 type alias Map =
     { width : Int
     , height : Int
-    , miner : Pos
+    , miner : Miner
+    }
+
+
+type alias Miner =
+    { pos : Pos
+    , dest : Pos
     }
 
 
@@ -92,6 +99,8 @@ type Msg
     | EndJump
     | ResolveCrisis (List Effect)
     | ClickMap MousePos
+    | Tick Time.Time
+    | EndMission
 
 
 type alias MousePos =

@@ -82,11 +82,14 @@ viewMission maybeMission =
                 [ div
                     [ class "miner"
                     , style
-                        [ ( "top", px mission.map.miner.y )
-                        , ( "left", px mission.map.miner.x )
+                        [ ( "top", px mission.map.miner.pos.y )
+                        , ( "left", px mission.map.miner.pos.x )
                         ]
                     ]
                     []
+                , div
+                    [ class "btn btn-end-mission", onClick EndMission ]
+                    [ text "End Mission" ]
                 ]
 
         Nothing ->
