@@ -108,22 +108,32 @@ initCrisis =
         """
     , choices =
         [ { name = "Repair System"
-          , effects =
-                [ ( Lose, 10, Pop )
-                ]
+          , consequence =
+                Branch
+                    { title = "Heat Death: Conclusion"
+                    , description = "You managed to repair the systems, but not before several casualties."
+                    , choices = [ { name = "OK", consequence = Leaf [ ( Lose, 10, Pop ) ] } ]
+                    }
           }
         , { name = "Approach Star"
-          , effects =
-                [ ( Lose, 20, Fuel )
-                ]
+          , consequence = Leaf [ ( Lose, 20, Fuel ) ]
           }
         , { name = "Harvest batteries"
-          , effects =
-                [ ( Lose, 30, Robot )
-                ]
+          , consequence = Leaf [ ( Lose, 30, Robot ) ]
           }
         ]
     }
+
+
+
+--        , { name = "Approach Star"
+--          , consequence = Branch
+--            { title = "Heat Death: Playing with Fire"
+--            , description = "We flew too close to the sun! We'll have to jettison some cargo to escape its gravitational pull!"
+--            , choices =
+--                [ { name = "Toss Ore"
+--
+--            }
 
 
 initAffinities : Affinities

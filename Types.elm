@@ -88,16 +88,22 @@ type alias Crisis =
     }
 
 
-
---type Choice
---    = Leaf String (List Effect)
---    | Branch (List Choice)
-
-
 type alias Choice =
     { name : String
-    , effects : List Effect
+    , consequence : Consequence
     }
+
+
+type Consequence
+    = Leaf (List Effect)
+    | Branch Crisis
+
+
+
+--type alias Choice =
+--    { name : String
+--    , effects : List Effect
+--    }
 
 
 type alias Effect =
@@ -138,6 +144,7 @@ type Msg
     | InitiateJump
     | EndJump
     | ResolveCrisis (List Effect)
+    | AdvanceCrisis Crisis
     | ClickMap MousePos
     | Tick Time.Time
     | EndMission

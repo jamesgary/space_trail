@@ -97,6 +97,14 @@ update msg ({ state } as model) =
                 _ ->
                     Debug.log "Should never happen!" ( model, Cmd.none )
 
+        AdvanceCrisis crisis ->
+            case state of
+                Turn turnData ->
+                    ( { model | state = Turn { turnData | state = FacingCrisis crisis } }, Cmd.none )
+
+                _ ->
+                    Debug.log "Should never happen!" ( model, Cmd.none )
+
         ClickMap ( x, y ) ->
             case state of
                 Turn turnData ->

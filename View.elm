@@ -126,11 +126,19 @@ viewCrisis { title, description, choices } =
 
 
 viewChoice : Choice -> Html Msg
-viewChoice { name, effects } =
-    div [ class "btn", onClick (ResolveCrisis effects) ]
-        [ text name
-        , div [ class "hint" ] (List.map viewEffect effects)
-        ]
+viewChoice ({ name, consequence } as choice) =
+    case consequence of
+        Leaf effects ->
+            div [ class "btn", onClick (ResolveCrisis effects) ]
+                [ text name
+                , div [ class "hint" ] (List.map viewEffect effects)
+                ]
+
+        Branch crisis ->
+            div [ class "btn", onClick (AdvanceCrisis crisis) ]
+                [ text name
+                , div [ class "hint" ] [ span [] [ span [] [ text "???" ] ] ]
+                ]
 
 
 viewEffect : Effect -> Html Msg

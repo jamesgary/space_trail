@@ -288,6 +288,10 @@ html, body {
 .btn:hover .hint {
   top: -42px;
   opacity: 1;
+
+
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .gain {
