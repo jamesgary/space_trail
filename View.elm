@@ -49,7 +49,11 @@ viewTurn ({ planets, state } as turnData) =
             ( "monitor-container", "mission-container hidden" )
     in
     div [ class "screen screen-turn" ]
-        [ div [ class monitorClass ]
+        [ div [ class "affinities-container" ]
+            [ viewAffinities turnData.affinities
+            , viewCouncilButton
+            ]
+        , div [ class monitorClass ]
             (case state of
                 Idle ->
                     [ div [ class "bg" ]
@@ -71,7 +75,6 @@ viewTurn ({ planets, state } as turnData) =
             )
         , div [ class "controls-container" ]
             [ viewStats turnData
-            , viewCouncilButton
             , viewJumpButton
             ]
 
@@ -172,6 +175,31 @@ viewStat name val =
     [ tr []
         [ td [ class <| "stat stat-title stat-" ++ name ] [ text <| name ++ ":" ]
         , td [ class <| "stat stat-val stat-" ++ name ] [ text <| toString val ]
+        ]
+    ]
+
+
+viewAffinities : Affinities -> Html Msg
+viewAffinities { theBelly, theShield, theWay, theGarden, thePick, theMutex, theBrains, theForge } =
+    table [ class "stats stats-affinities" ]
+        (List.concat
+            [ viewAffinity "The Belly" "the-belly" theBelly
+            , viewAffinity "The Shield" "the-shield" theShield
+            , viewAffinity "The Way" "the-way" theWay
+            , viewAffinity "The Garden" "the-garden" theGarden
+            , viewAffinity "The Pick" "the-pick" thePick
+            , viewAffinity "The Mutex" "the-mutex" theMutex
+            , viewAffinity "The Brains" "the-brains" theBrains
+            , viewAffinity "The Forge" "the-forge" theForge
+            ]
+        )
+
+
+viewAffinity : String -> String -> Float -> List (Html Msg)
+viewAffinity title className val =
+    [ tr []
+        [ td [ class <| "stat stat-title stat-" ++ className ] [ text <| title ++ ":" ]
+        , td [ class <| "stat stat-val stat-" ++ className ] [ text <| toString val ]
         ]
     ]
 

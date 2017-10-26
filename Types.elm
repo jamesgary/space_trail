@@ -23,11 +23,24 @@ type alias TurnData =
     , fuel : Int
     , pop : Int
     , robot : Int
+    , affinities : Affinities
     , planets : List Planet
     , state : TurnState
 
     --, mission : Maybe Mission
     --, crisis : Maybe Crisis
+    }
+
+
+type alias Affinities =
+    { theBelly : Float
+    , theShield : Float
+    , theWay : Float
+    , theGarden : Float
+    , thePick : Float
+    , theMutex : Float
+    , theBrains : Float
+    , theForge : Float
     }
 
 
@@ -75,6 +88,12 @@ type alias Crisis =
     }
 
 
+
+--type Choice
+--    = Leaf String (List Effect)
+--    | Branch (List Choice)
+
+
 type alias Choice =
     { name : String
     , effects : List Effect
@@ -97,6 +116,18 @@ type Resource
     | Fuel
     | Pop
     | Robot
+
+
+
+--type Faction
+--    = TheBelly
+--    | TheShield
+--    | TheWay
+--    | TheGarden
+--    | ThePick
+--    | TheMutex
+--    | TheBrains
+--    | TheForge
 
 
 type Msg
