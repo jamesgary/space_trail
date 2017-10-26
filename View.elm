@@ -118,7 +118,7 @@ viewCrisis { title, description, choices } =
         (List.concat
             [ [ h1 [] [ text title ] ]
             , [ p [] [ text description ] ]
-            , List.map viewChoice choices
+            , [ div [ class "btn-list" ] (List.map viewChoice choices) ]
 
             --, [ div [ class "btn", onClick Dismiss ] [ text "Cancel" ] ]
             ]

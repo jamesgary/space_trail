@@ -29,6 +29,10 @@ html, body {
   transform: skew(120deg);
 }
 
+.btn-list {
+  text-align: center;
+}
+
 .btn {
   cursor: pointer;
   color: white;
@@ -288,8 +292,6 @@ html, body {
 .btn:hover .hint {
   top: -42px;
   opacity: 1;
-
-
   overflow: hidden;
   white-space: nowrap;
 }
@@ -345,7 +347,7 @@ html, body {
   background: black;
   color: #0f0;
   text-align: left;
-  padding: 10px;
+  padding: 15px 30px;
   box-sizing: border-box;
 }
 
