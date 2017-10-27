@@ -2,12 +2,16 @@ module Types exposing (..)
 
 import Color exposing (Color)
 import Navigation
+import Random
 import Time
 
 
 type alias Model =
     { state : State
     , jumpState : JumpState
+
+    --, crisisGenerator : Random.Generator ( Maybe Crisis, List Crisis )
+    , seed : Random.Seed
     }
 
 

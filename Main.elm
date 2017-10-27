@@ -2,10 +2,12 @@ module Main exposing (main)
 
 import AnimationFrame
 import Color
+import Crises
 import Html
 import Init exposing (..)
 import Navigation
 import Process
+import Random
 import Task
 import Time exposing (Time)
 import Types exposing (..)
@@ -13,7 +15,7 @@ import View exposing (view)
 
 
 main =
-    Navigation.program UrlChange
+    Navigation.programWithFlags UrlChange
         { init = init
         , view = view
         , update = update
@@ -32,10 +34,10 @@ type alias Effect =
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
-update msg ({ state } as model) =
+update msg ({ state, seed } as model) =
     case msg of
         ClickStart ->
-            ( { state = Turn initTurnData, jumpState = Still }, Cmd.none )
+            ( { model | state = Turn initTurnData, jumpState = Still }, Cmd.none )
 
         UrlChange url ->
             ( model, Cmd.none )
@@ -77,7 +79,20 @@ update msg ({ state } as model) =
         EndJump ->
             case state of
                 Turn turnData ->
-                    ( { model | jumpState = Still, state = Turn { turnData | state = FacingCrisis initCrisis } }, Cmd.none )
+                    let
+                        ( crisisData, newSeed ) =
+                            Random.step Crises.crisisGenerator seed
+
+                        crisis =
+                            case crisisData of
+                                ( Just c, _ ) ->
+                                    c
+
+                                _ ->
+                                    Crises.fallbackCrisis
+                    in
+                    --( { model | jumpState = Still, state = Turn { turnData | state = FacingCrisis Init.initCrisis } }, Cmd.none )
+                    ( { model | seed = newSeed, jumpState = Still, state = Turn { turnData | state = FacingCrisis crisis } }, Cmd.none )
 
                 _ ->
                     Debug.log "Should never happen!" ( model, Cmd.none )
