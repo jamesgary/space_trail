@@ -38,9 +38,7 @@ allCrises =
       , description = """
       After completing the latest hyper-jump, the command bridge shutters as a tremendous BOOM! echoes through the ship's plasteel halls. Your chief engineering officer informs you that engine pod delta-alpha has violently ruptured. Within moments you learn that hundreds have perished in the initial explosion and several fires have trapped the surviving machinists in the ravaged pod.
 
-      You could order the pod jettisoned from the ship, dooming the survivors but preventing the fires from spreading to the ship's food stores. The Forge urges you to send a team in to rescue the trapped machinists – their knowledge and skills are irreplaceable, and if a thousand useless civilians must starve to death to save even a single machinist, then that is a small price to pay. Only the Shield can provide a team skilled enough to attempt a rescue mission, though they insist it would be a
-      suicide mission.
-
+      You could order the pod jettisoned from the ship, dooming the survivors but preventing the fires from spreading to the ship's food stores. The Forge urges you to send a team in to rescue the trapped machinists – their knowledge and skills are irreplaceable, and if a thousand useless civilians must starve to death to save even a single machinist, then that is a small price to pay. Only the Shield can provide a team skilled enough to attempt a rescue mission, though they insist it would be a suicide mission.
       """
       , choices =
             [ { name = "Jettison the burning engine pod, dooming the survivors."

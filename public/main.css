@@ -287,13 +287,13 @@ html, body {
   opacity: 0;
   transition: 0.2s all ease-out;
   color: black;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .btn:hover .hint {
   top: -42px;
   opacity: 1;
-  overflow: hidden;
-  white-space: nowrap;
 }
 
 .gain {

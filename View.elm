@@ -191,14 +191,14 @@ viewAffinities : Affinities -> Html Msg
 viewAffinities { theBelly, theShield, theWay, theGarden, thePick, theMutex, theBrains, theForge } =
     table [ class "stats stats-affinities" ]
         (List.concat
-            [ viewAffinity "The Belly" "the-belly" theBelly
+            [ viewAffinity "The Pick" "the-pick" thePick
+            , viewAffinity "The Forge" "the-forge" theForge
             , viewAffinity "The Shield" "the-shield" theShield
-            , viewAffinity "The Way" "the-way" theWay
             , viewAffinity "The Garden" "the-garden" theGarden
-            , viewAffinity "The Pick" "the-pick" thePick
             , viewAffinity "The Mutex" "the-mutex" theMutex
             , viewAffinity "The Brains" "the-brains" theBrains
-            , viewAffinity "The Forge" "the-forge" theForge
+            , viewAffinity "The Way" "the-way" theWay
+            , viewAffinity "The Belly" "the-belly" theBelly
             ]
         )
 
