@@ -291,6 +291,10 @@ html, body {
   white-space: nowrap;
 }
 
+.hint span:not(:last-child):after {
+  content: ', ';
+}
+
 .btn:hover .hint {
   top: -42px;
   opacity: 1;
@@ -353,6 +357,10 @@ html, body {
 
 .crisis h1 {
   margin: 0;
+}
+
+.crisis p {
+  font-size: 14px;
 }
 
 .crisis .btn {

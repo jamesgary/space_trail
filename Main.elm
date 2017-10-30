@@ -260,6 +260,33 @@ applyEffect ( operator, amt, resource ) turnData =
 
                 Robot ->
                     turnData.robot
+
+                BellyAff ->
+                    turnData.affinities.theBelly
+
+                ShieldAff ->
+                    turnData.affinities.theShield
+
+                WayAff ->
+                    turnData.affinities.theWay
+
+                GardenAff ->
+                    turnData.affinities.theGarden
+
+                PickAff ->
+                    turnData.affinities.thePick
+
+                MutexAff ->
+                    turnData.affinities.theMutex
+
+                BrainsAff ->
+                    turnData.affinities.theBrains
+
+                ForgeAff ->
+                    turnData.affinities.theForge
+
+        affinities =
+            turnData.affinities
     in
     case resource of
         Ore ->
@@ -279,6 +306,62 @@ applyEffect ( operator, amt, resource ) turnData =
 
         Robot ->
             { turnData | robot = currentAmt + delta }
+
+        BellyAff ->
+            let
+                newAffinities =
+                    { affinities | theBelly = currentAmt + delta }
+            in
+            { turnData | affinities = newAffinities }
+
+        ShieldAff ->
+            let
+                newAffinities =
+                    { affinities | theShield = currentAmt + delta }
+            in
+            { turnData | affinities = newAffinities }
+
+        WayAff ->
+            let
+                newAffinities =
+                    { affinities | theWay = currentAmt + delta }
+            in
+            { turnData | affinities = newAffinities }
+
+        GardenAff ->
+            let
+                newAffinities =
+                    { affinities | theGarden = currentAmt + delta }
+            in
+            { turnData | affinities = newAffinities }
+
+        PickAff ->
+            let
+                newAffinities =
+                    { affinities | thePick = currentAmt + delta }
+            in
+            { turnData | affinities = newAffinities }
+
+        MutexAff ->
+            let
+                newAffinities =
+                    { affinities | theMutex = currentAmt + delta }
+            in
+            { turnData | affinities = newAffinities }
+
+        BrainsAff ->
+            let
+                newAffinities =
+                    { affinities | theBrains = currentAmt + delta }
+            in
+            { turnData | affinities = newAffinities }
+
+        ForgeAff ->
+            let
+                newAffinities =
+                    { affinities | theForge = currentAmt + delta }
+            in
+            { turnData | affinities = newAffinities }
 
 
 subscriptions : Model -> Sub Msg

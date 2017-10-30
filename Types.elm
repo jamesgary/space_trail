@@ -37,14 +37,14 @@ type alias TurnData =
 
 
 type alias Affinities =
-    { theBelly : Float
-    , theShield : Float
-    , theWay : Float
-    , theGarden : Float
-    , thePick : Float
-    , theMutex : Float
-    , theBrains : Float
-    , theForge : Float
+    { theBelly : Int
+    , theShield : Int
+    , theWay : Int
+    , theGarden : Int
+    , thePick : Int
+    , theMutex : Int
+    , theBrains : Int
+    , theForge : Int
     }
 
 
@@ -126,6 +126,15 @@ type Resource
     | Fuel
     | Pop
     | Robot
+      -- affinities
+    | BellyAff
+    | ShieldAff
+    | WayAff
+    | GardenAff
+    | PickAff
+    | MutexAff
+    | BrainsAff
+    | ForgeAff
 
 
 
@@ -189,6 +198,30 @@ strFromResource resource =
 
         Robot ->
             "Robot"
+
+        BellyAff ->
+            "Belly Affinity"
+
+        ShieldAff ->
+            "Shield Affinity"
+
+        WayAff ->
+            "Way Affinity"
+
+        GardenAff ->
+            "Garden Affinity"
+
+        PickAff ->
+            "Pick Affinity"
+
+        MutexAff ->
+            "Mutex Affinity"
+
+        BrainsAff ->
+            "Brains Affinity"
+
+        ForgeAff ->
+            "Forge Affinity"
 
 
 colorString : Color -> String

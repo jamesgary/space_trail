@@ -203,7 +203,7 @@ viewAffinities { theBelly, theShield, theWay, theGarden, thePick, theMutex, theB
         )
 
 
-viewAffinity : String -> String -> Float -> List (Html Msg)
+viewAffinity : String -> String -> Int -> List (Html Msg)
 viewAffinity title className val =
     [ tr []
         [ td [ class <| "stat stat-title stat-" ++ className ] [ text <| title ++ ":" ]

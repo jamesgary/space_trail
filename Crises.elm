@@ -46,7 +46,7 @@ allCrises =
                     Branch
                         { title = "Engine Pod Rupture"
                         , description = "Your food stores are safe, but many irreplaceable machinists have been lost. The Forge is greatly displeased."
-                        , choices = [ { name = "OK", consequence = Leaf [ ( Lose, 20, Pop ) ] } ]
+                        , choices = [ { name = "OK", consequence = Leaf [ ( Lose, 20, Pop ), ( Lose, 10, ForgeAff ) ] } ]
                         }
               }
             ]
