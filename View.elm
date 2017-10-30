@@ -5,6 +5,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (on, onClick)
 import Json.Decode as Decode
+import Markdown
 import Types exposing (..)
 import ViewMap
 
@@ -117,7 +118,7 @@ viewCrisis { title, description, choices } =
     div [ class "crisis" ]
         (List.concat
             [ [ h1 [] [ text title ] ]
-            , [ p [] [ text description ] ]
+            , [ p [] [ Markdown.toHtml [ class "" ] description ] ]
             , [ div [ class "btn-list" ] (List.map viewChoice choices) ]
 
             --, [ div [ class "btn", onClick Dismiss ] [ text "Cancel" ] ]
