@@ -23,16 +23,6 @@ main =
         }
 
 
-type alias Choice =
-    { name : String
-    , effects : List Effect
-    }
-
-
-type alias Effect =
-    ( Operator, Int, Resource )
-
-
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg ({ state, seed } as model) =
     case msg of

@@ -30,6 +30,22 @@ init timestamp location =
             , Cmd.none
             )
 
+        "#crisis" ->
+            let
+                crisis =
+                    List.head Crises.allCrises
+                        |> Maybe.withDefault Crises.fallbackCrisis
+
+                turnData =
+                    { initTurnData | state = FacingCrisis crisis }
+            in
+            ( { state = Turn turnData
+              , jumpState = Still
+              , seed = seed
+              }
+            , Cmd.none
+            )
+
         _ ->
             ( { state = Start
               , jumpState = Still
@@ -118,17 +134,6 @@ initMap =
         , dest = Pos 100 100
         }
     }
-
-
-
---        , { name = "Approach Star"
---          , consequence = Branch
---            { title = "Heat Death: Playing with Fire"
---            , description = "We flew too close to the sun! We'll have to jettison some cargo to escape its gravitational pull!"
---            , choices =
---                [ { name = "Toss Ore"
---
---            }
 
 
 initAffinities : Affinities
