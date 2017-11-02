@@ -155,7 +155,7 @@ type Msg
     | InitiateJump
     | EndJump
     | ResolveCrisis (List Effect)
-    | AdvanceCrisis Crisis
+    | AdvanceCrisis CrisisBody
     | ClickMap MousePos
     | Tick Time.Time
     | EndMission

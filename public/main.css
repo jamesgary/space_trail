@@ -398,6 +398,7 @@ html, body {
   margin: 0 5px 10px;
   text-align: center;
   position: relative;
+  font-size: 10px;
 }
 
 .crisis .crisis-actions .btn:last-child {

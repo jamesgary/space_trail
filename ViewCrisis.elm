@@ -2,7 +2,7 @@ module ViewCrisis exposing (viewCrisis)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onMouseOut, onMouseOver)
+import Html.Events exposing (onClick, onMouseOut, onMouseOver)
 import Markdown
 import Types exposing (..)
 
@@ -12,7 +12,7 @@ viewCrisis { title, body } maybeAction =
     div [ class "crisis" ]
         [ h1 [ class "crisis-title" ] [ text title ]
         , Markdown.toHtml [ class "crisis-description" ] body.description
-        , div [ class "crisis-consequence" ] (viewConsequence maybeAction)
+        , div [ class "crisis-consequence" ] (viewConsequence body.action maybeAction)
         , viewAction body.action
         ]
 
@@ -20,21 +20,24 @@ viewCrisis { title, body } maybeAction =
 viewAction : CrisisAction -> Html Msg
 viewAction action =
     div
-        [ class "crisis-actions crisis-actions-ok btn-list"
+        [ class "crisis-actions crisis-actions-ok"
         ]
-        (case action of
-            OK effects ->
-                [ div
-                    [ class "btn"
-                    , onMouseOver (HoveredActionBtn action)
-                    , onMouseOut UnhoveredActionBtn
+        [ div [ class "btn-list" ]
+            (case action of
+                OK effects ->
+                    [ div
+                        [ class "btn"
+                        , onMouseOver (HoveredActionBtn action)
+                        , onMouseOut UnhoveredActionBtn
+                        , onClick (ResolveCrisis effects)
+                        ]
+                        [ text "OK" ]
                     ]
-                    [ text "OK" ]
-                ]
 
-            Choices choices ->
-                List.map viewChoice choices
-        )
+                Choices choices ->
+                    List.map viewChoice choices
+            )
+        ]
 
 
 viewChoice : Choice -> Html Msg
@@ -43,25 +46,32 @@ viewChoice { name, consequence } =
         [ class "btn"
         , onMouseOver (HoveredActionBtn consequence.action)
         , onMouseOut UnhoveredActionBtn
+        , onClick (AdvanceCrisis consequence)
         ]
         [ text name ]
 
 
-viewConsequence : Maybe CrisisAction -> List (Html Msg)
-viewConsequence maybeAction =
-    case maybeAction of
-        Just action ->
-            case action of
-                OK effects ->
-                    List.map viewEffect effects
+viewConsequence : CrisisAction -> Maybe CrisisAction -> List (Html Msg)
+viewConsequence availableAction hoveredAction =
+    case availableAction of
+        -- always show consequences if the only action is "OK"
+        OK effects ->
+            List.map viewEffect effects
 
-                Choices choices ->
-                    List.map viewChoiceEffects choices
-                        |> List.intersperse (p [] [ text "- or -" ])
+        _ ->
+            case hoveredAction of
+                Just action ->
+                    case action of
+                        OK effects ->
+                            List.map viewEffect effects
 
-        Nothing ->
-            [ p [] [ text "..." ]
-            ]
+                        Choices choices ->
+                            List.map viewChoiceEffects choices
+                                |> List.intersperse (p [] [ text "- or -" ])
+
+                Nothing ->
+                    [ p [] [ text "..." ]
+                    ]
 
 
 viewChoiceEffects : Choice -> Html Msg

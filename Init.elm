@@ -57,12 +57,12 @@ init timestamp location =
 
 initTurnData : TurnData
 initTurnData =
-    { ore = 420
-    , spice = 69
-    , food = 123
-    , fuel = 999
-    , pop = 27
-    , robot = 101
+    { ore = 100
+    , spice = 100
+    , food = 100
+    , fuel = 100
+    , pop = 100
+    , robot = 100
     , affinities = initAffinities
     , planets =
         [ { color = Color.gray
@@ -88,12 +88,12 @@ initTurnData =
 
 initTurnDataWithMission : TurnData
 initTurnDataWithMission =
-    { ore = 420
-    , spice = 69
-    , food = 123
-    , fuel = 999
-    , pop = 27
-    , robot = 101
+    { ore = 100
+    , spice = 100
+    , food = 100
+    , fuel = 100
+    , pop = 100
+    , robot = 100
     , affinities = initAffinities
     , planets =
         [ { color = Color.gray

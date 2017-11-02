@@ -102,10 +102,15 @@ update msg ({ state, seed } as model) =
                 _ ->
                     Debug.log "Should never happen!" ( model, Cmd.none )
 
-        AdvanceCrisis crisis ->
+        AdvanceCrisis crisisBody ->
             case state of
                 Turn turnData ->
-                    ( { model | state = Turn { turnData | state = FacingCrisis crisis Nothing } }, Cmd.none )
+                    case turnData.state of
+                        FacingCrisis crisis _ ->
+                            ( { model | state = Turn { turnData | state = FacingCrisis { crisis | body = crisisBody } Nothing } }, Cmd.none )
+
+                        _ ->
+                            Debug.log "Should never happen!" ( model, Cmd.none )
 
                 _ ->
                     Debug.log "Should never happen!" ( model, Cmd.none )
