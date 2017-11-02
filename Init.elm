@@ -37,7 +37,7 @@ init timestamp location =
                         |> Maybe.withDefault Crises.fallbackCrisis
 
                 turnData =
-                    { initTurnData | state = FacingCrisis crisis }
+                    { initTurnData | state = FacingCrisis crisis Nothing }
             in
             ( { state = Turn turnData
               , jumpState = Still

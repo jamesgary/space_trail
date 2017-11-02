@@ -3,7 +3,7 @@ module View exposing (view)
 import Color exposing (Color)
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (on, onClick)
+import Html.Events exposing (on, onClick, onMouseOut, onMouseOver)
 import Json.Decode as Decode
 import Markdown
 import Types exposing (..)
@@ -68,8 +68,8 @@ viewTurn ({ planets, state } as turnData) =
                 OnMission mission ->
                     [ viewMission mission ]
 
-                FacingCrisis crisis ->
-                    [ viewCrisis crisis ]
+                FacingCrisis crisis hoveredAction ->
+                    [ viewCrisis crisis hoveredAction ]
 
                 _ ->
                     []
@@ -113,33 +113,73 @@ viewMission mission =
         ]
 
 
-viewCrisis : Crisis -> Html Msg
-viewCrisis { title, description, choices } =
+viewCrisis : Crisis -> Maybe CrisisAction -> Html Msg
+viewCrisis { title, body } maybeAction =
     div [ class "crisis" ]
-        (List.concat
-            [ [ h1 [] [ text title ] ]
-            , [ p [] [ Markdown.toHtml [ class "" ] description ] ]
-            , [ div [ class "btn-list" ] (List.map viewChoice choices) ]
+        [ h1 [ class "crisis-title" ] [ text title ]
+        , Markdown.toHtml [ class "crisis-description" ] body.description
+        , div [ class "crisis-consequence" ] (viewConsequence maybeAction)
+        , viewAction body.action
+        ]
 
-            --, [ div [ class "btn", onClick Dismiss ] [ text "Cancel" ] ]
-            ]
+
+viewAction : CrisisAction -> Html Msg
+viewAction action =
+    div
+        [ class "crisis-actions crisis-actions-ok btn-list"
+        ]
+        (case action of
+            OK effects ->
+                [ div
+                    [ class "btn"
+                    , onMouseOver (HoveredActionBtn action)
+                    , onMouseOut UnhoveredActionBtn
+                    ]
+                    [ text "OK" ]
+                ]
+
+            Choices choices ->
+                List.map viewChoice choices
         )
 
 
 viewChoice : Choice -> Html Msg
-viewChoice ({ name, consequence } as choice) =
-    case consequence of
-        Leaf effects ->
-            div [ class "btn", onClick (ResolveCrisis effects) ]
-                [ text name
-                , div [ class "hint" ] (List.map viewEffect effects)
-                ]
+viewChoice { name, consequence } =
+    div
+        [ class "btn"
+        , onMouseOver (HoveredActionBtn consequence.action)
+        , onMouseOut UnhoveredActionBtn
+        ]
+        [ text name ]
 
-        Branch crisis ->
-            div [ class "btn", onClick (AdvanceCrisis crisis) ]
-                [ text name
-                , div [ class "hint" ] [ span [] [ span [] [ text "???" ] ] ]
-                ]
+
+viewConsequence : Maybe CrisisAction -> List (Html Msg)
+viewConsequence maybeAction =
+    case maybeAction of
+        Just action ->
+            case action of
+                OK effects ->
+                    List.map viewEffect effects
+
+                Choices choices ->
+                    List.map viewChoiceEffects choices
+                        |> List.intersperse (p [] [ text "- or -" ])
+
+        Nothing ->
+            [ p [] [ text "..." ]
+            ]
+
+
+viewChoiceEffects : Choice -> Html Msg
+viewChoiceEffects { consequence } =
+    div [ class "choice-effect" ]
+        (case consequence.action of
+            OK effects ->
+                List.map viewEffect effects
+
+            Choices choices ->
+                List.map viewChoiceEffects choices
+        )
 
 
 viewEffect : Effect -> Html Msg
@@ -148,21 +188,19 @@ viewEffect ( op, amt, resource ) =
         ( opText, opClass ) =
             case op of
                 Gain ->
-                    ( "Gain", "gain" )
+                    ( "+", "gain" )
 
                 Lose ->
-                    ( "Lose", "lose" )
+                    ( "-", "lose" )
 
         effectText =
             opText ++ " " ++ toString amt ++ " " ++ strFromResource resource
     in
-    span []
-        [ span [] [ text effectText ]
+    li [ class "effect" ]
+        [ span [ class opClass ] [ text (opText ++ toString amt) ]
+        , span [] [ text " " ]
+        , span [ class (strFromResource resource) ] [ text (strFromResource resource) ]
         ]
-
-
-
---<span class="gain">Gain <span="class"="ore">100 Ore</span></span>
 
 
 viewStats : TurnData -> Html Msg

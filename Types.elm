@@ -51,7 +51,7 @@ type alias Affinities =
 type TurnState
     = Idle
     | OnMission Mission
-    | FacingCrisis Crisis
+    | FacingCrisis Crisis (Maybe CrisisAction)
     | VisitingCouncil
 
 
@@ -87,27 +87,25 @@ type alias Pos =
 
 type alias Crisis =
     { title : String
-    , description : String
-    , choices : List Choice
+    , body : CrisisBody
     }
+
+
+type alias CrisisBody =
+    { description : String
+    , action : CrisisAction
+    }
+
+
+type CrisisAction
+    = OK (List Effect)
+    | Choices (List Choice)
 
 
 type alias Choice =
     { name : String
-    , consequence : Consequence
+    , consequence : CrisisBody
     }
-
-
-type Consequence
-    = Leaf (List Effect)
-    | Branch Crisis
-
-
-
---type alias Choice =
---    { name : String
---    , effects : List Effect
---    }
 
 
 type alias Effect =
@@ -162,6 +160,8 @@ type Msg
     | Tick Time.Time
     | EndMission
     | VisitCouncil
+    | HoveredActionBtn CrisisAction
+    | UnhoveredActionBtn
 
 
 type alias MousePos =

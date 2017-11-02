@@ -82,7 +82,7 @@ update msg ({ state, seed } as model) =
                                     Crises.fallbackCrisis
                     in
                     --( { model | jumpState = Still, state = Turn { turnData | state = FacingCrisis Init.initCrisis } }, Cmd.none )
-                    ( { model | seed = newSeed, jumpState = Still, state = Turn { turnData | state = FacingCrisis crisis } }, Cmd.none )
+                    ( { model | seed = newSeed, jumpState = Still, state = Turn { turnData | state = FacingCrisis crisis Nothing } }, Cmd.none )
 
                 _ ->
                     Debug.log "Should never happen!" ( model, Cmd.none )
@@ -105,7 +105,33 @@ update msg ({ state, seed } as model) =
         AdvanceCrisis crisis ->
             case state of
                 Turn turnData ->
-                    ( { model | state = Turn { turnData | state = FacingCrisis crisis } }, Cmd.none )
+                    ( { model | state = Turn { turnData | state = FacingCrisis crisis Nothing } }, Cmd.none )
+
+                _ ->
+                    Debug.log "Should never happen!" ( model, Cmd.none )
+
+        HoveredActionBtn action ->
+            case state of
+                Turn turnData ->
+                    case turnData.state of
+                        FacingCrisis crisis _ ->
+                            ( { model | state = Turn { turnData | state = FacingCrisis crisis (Just action) } }, Cmd.none )
+
+                        _ ->
+                            Debug.log "Should never happen!" ( model, Cmd.none )
+
+                _ ->
+                    Debug.log "Should never happen!" ( model, Cmd.none )
+
+        UnhoveredActionBtn ->
+            case state of
+                Turn turnData ->
+                    case turnData.state of
+                        FacingCrisis crisis _ ->
+                            ( { model | state = Turn { turnData | state = FacingCrisis crisis Nothing } }, Cmd.none )
+
+                        _ ->
+                            Debug.log "Should never happen!" ( model, Cmd.none )
 
                 _ ->
                     Debug.log "Should never happen!" ( model, Cmd.none )
@@ -356,11 +382,11 @@ applyEffect ( operator, amt, resource ) turnData =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    --Sub.none
-    AnimationFrame.times Tick
+    Sub.none
 
 
 
+--AnimationFrame.times Tick
 --Time.every 100 Tick
 
 
