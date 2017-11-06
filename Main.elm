@@ -387,11 +387,11 @@ applyEffect ( operator, amt, resource ) turnData =
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    --Sub.none
+    AnimationFrame.times Tick
 
 
 
---AnimationFrame.times Tick
 --Time.every 100 Tick
 
 
